@@ -1,7 +1,8 @@
 from core.models.assignments import AssignmentStateEnum, GradeEnum
-
+import time
 
 def test_get_assignments(client, h_principal):
+    
     response = client.get(
         '/principal/assignments',
         headers=h_principal
@@ -15,6 +16,7 @@ def test_get_assignments(client, h_principal):
 
 
 def test_grade_assignment_draft_assignment(client, h_principal):
+    
     """
     failure case: If an assignment is in Draft state, it cannot be graded by principal
     """
@@ -31,6 +33,7 @@ def test_grade_assignment_draft_assignment(client, h_principal):
 
 
 def test_grade_assignment(client, h_principal):
+    
     response = client.post(
         '/principal/assignments/grade',
         json={
@@ -47,6 +50,7 @@ def test_grade_assignment(client, h_principal):
 
 
 def test_regrade_assignment(client, h_principal):
+    
     response = client.post(
         '/principal/assignments/grade',
         json={
@@ -60,3 +64,15 @@ def test_regrade_assignment(client, h_principal):
 
     assert response.json['data']['state'] == AssignmentStateEnum.GRADED.value
     assert response.json['data']['grade'] == GradeEnum.B
+
+def test_get_all_teachers(client, h_principal):
+    
+    response = client.get(
+        '/principal/teachers',
+        headers=h_principal
+    )
+
+    assert response.status_code == 200
+
+    teachers = response.json['data']
+    assert len(teachers) == 2

@@ -1,4 +1,7 @@
+import time
+
 def test_get_assignments_student_1(client, h_student_1):
+    
     response = client.get(
         '/student/assignments',
         headers=h_student_1
@@ -12,6 +15,7 @@ def test_get_assignments_student_1(client, h_student_1):
 
 
 def test_get_assignments_student_2(client, h_student_2):
+    
     response = client.get(
         '/student/assignments',
         headers=h_student_2
@@ -25,6 +29,7 @@ def test_get_assignments_student_2(client, h_student_2):
 
 
 def test_post_assignment_null_content(client, h_student_1):
+    
     """
     failure case: content cannot be null
     """
@@ -40,6 +45,7 @@ def test_post_assignment_null_content(client, h_student_1):
 
 
 def test_post_assignment_student_1(client, h_student_1):
+    
     content = 'ABCD TESTPOST'
 
     response = client.post(
@@ -58,6 +64,7 @@ def test_post_assignment_student_1(client, h_student_1):
 
 
 def test_submit_assignment_student_1(client, h_student_1):
+    
     response = client.post(
         '/student/assignments/submit',
         headers=h_student_1,
@@ -75,6 +82,7 @@ def test_submit_assignment_student_1(client, h_student_1):
 
 
 def test_assignment_resubmit_error(client, h_student_1):
+    
     response = client.post(
         '/student/assignments/submit',
         headers=h_student_1,

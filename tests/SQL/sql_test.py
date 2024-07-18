@@ -63,7 +63,6 @@ def test_get_assignments_in_graded_state_for_each_student():
     # Flush the changes to the database session
     db.session.flush()
     # Commit the changes to the database
-    db.session.commit()
 
     # Define the expected result before any changes
     expected_result = [(1, 3)]
@@ -76,7 +75,8 @@ def test_get_assignments_in_graded_state_for_each_student():
     sql_result = db.session.execute(text(sql)).fetchall()
     for itr, result in enumerate(expected_result):
         assert result[0] == sql_result[itr][0]
-
+    db.session.rollback()   
+    db.session.commit()
 
 def test_get_grade_A_assignments_for_teacher_with_max_grading():
     """Test to get count of grade A assignments for teacher which has graded maximum assignments"""
